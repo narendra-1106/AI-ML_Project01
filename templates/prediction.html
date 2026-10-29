@@ -1,0 +1,171 @@
+{% extends "base.html" %}
+
+{% block title %}Match Prediction - IPL ML Predictor{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="prediction-wrapper">
+        <div class="form-header text-center">
+            <span class="badge-primary"><i class="fa-solid fa-wand-magic-sparkles"></i> AI Inference</span>
+            <h1 class="page-title mt-2">IPL Match Winner Prediction</h1>
+            <p class="text-muted max-w-600 mx-auto">
+                Select match conditions to predict the most likely winner using our trained 
+                Machine Learning classification pipeline.
+            </p>
+        </div>
+
+        <div class="card prediction-card mt-4">
+            <form action="{{ url_for('predict') }}" method="POST" id="predictionForm" onsubmit="return validateForm()">
+                <div class="form-grid">
+                    <!-- Team 1 -->
+                    <div class="form-group">
+                        <label for="team1" class="form-label">
+                            <i class="fa-solid fa-shield text-primary"></i> Team 1 (Home / First Team)
+                        </label>
+                        <select name="team1" id="team1" class="form-control" required onchange="updateTossWinners()">
+                            <option value="" disabled selected>-- Select Team 1 --</option>
+                            {% for team in teams %}
+                                <option value="{{ team }}">{{ team }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <!-- Team 2 -->
+                    <div class="form-group">
+                        <label for="team2" class="form-label">
+                            <i class="fa-solid fa-shield text-secondary"></i> Team 2 (Away / Opponent)
+                        </label>
+                        <select name="team2" id="team2" class="form-control" required onchange="updateTossWinners()">
+                            <option value="" disabled selected>-- Select Team 2 --</option>
+                            {% for team in teams %}
+                                <option value="{{ team }}">{{ team }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <!-- Toss Winner -->
+                    <div class="form-group">
+                        <label for="toss_winner" class="form-label">
+                            <i class="fa-solid fa-coins text-warning"></i> Toss Winner
+                        </label>
+                        <select name="toss_winner" id="toss_winner" class="form-control" required>
+                            <option value="" disabled selected>-- Select Teams First --</option>
+                        </select>
+                    </div>
+
+                    <!-- Toss Decision -->
+                    <div class="form-group">
+                        <label for="toss_decision" class="form-label">
+                            <i class="fa-solid fa-hand-fist text-info"></i> Toss Decision
+                        </label>
+                        <select name="toss_decision" id="toss_decision" class="form-control" required>
+                            <option value="field" selected>Field First (Bowling)</option>
+                            <option value="bat">Bat First (Setting Target)</option>
+                        </select>
+                    </div>
+
+                    <!-- Match Venue -->
+                    <div class="form-group full-width">
+                        <label for="venue" class="form-label">
+                            <i class="fa-solid fa-location-dot text-danger"></i> Match Venue / Stadium
+                        </label>
+                        <select name="venue" id="venue" class="form-control" required>
+                            <option value="" disabled selected>-- Select Stadium / Venue --</option>
+                            {% for venue in venues %}
+                                <option value="{{ venue }}">{{ venue }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <div id="errorAlert" class="alert alert-danger mt-3" style="display: none;">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    <span id="errorMessage"></span>
+                </div>
+
+                <div class="form-actions mt-4 text-center">
+                    <button type="submit" class="btn btn-primary btn-lg px-5">
+                        <i class="fa-solid fa-bolt"></i> Generate Prediction
+                    </button>
+                    <a href="{{ url_for('index') }}" class="btn btn-outline btn-lg ml-2">Cancel</a>
+                </div>
+            </form>
+        </div>
+
+        <!-- Academic Context Alert -->
+        <div class="card context-card mt-4">
+            <div class="context-icon">
+                <i class="fa-solid fa-circle-question"></i>
+            </div>
+            <div class="context-text">
+                <h5>How This Prediction Works</h5>
+                <p>
+                    The backend transforms the selected categorical inputs into one-hot encoded sparse features 
+                    and feeds them into the trained <strong>Random Forest Classifier</strong> pipeline. 
+                    The model computes probabilistic confidence scores based on historical franchise match patterns, 
+                    toss impact, and ground conditions.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+function updateTossWinners() {
+    const t1 = document.getElementById("team1").value;
+    const t2 = document.getElementById("team2").value;
+    const tossSelect = document.getElementById("toss_winner");
+    const currentVal = tossSelect.value;
+
+    tossSelect.innerHTML = "";
+
+    if (!t1 && !t2) {
+        tossSelect.innerHTML = '<option value="" disabled selected>-- Select Teams First --</option>';
+        return;
+    }
+
+    tossSelect.innerHTML = '<option value="" disabled selected>-- Select Toss Winner --</option>';
+
+    if (t1) {
+        const opt1 = document.createElement("option");
+        opt1.value = t1;
+        opt1.textContent = t1;
+        if (currentVal === t1) opt1.selected = true;
+        tossSelect.appendChild(opt1);
+    }
+
+    if (t2 && t2 !== t1) {
+        const opt2 = document.createElement("option");
+        opt2.value = t2;
+        opt2.textContent = t2;
+        if (currentVal === t2) opt2.selected = true;
+        tossSelect.appendChild(opt2);
+    }
+}
+
+function validateForm() {
+    const t1 = document.getElementById("team1").value;
+    const t2 = document.getElementById("team2").value;
+    const errorBox = document.getElementById("errorAlert");
+    const errorMsg = document.getElementById("errorMessage");
+
+    errorBox.style.display = "none";
+
+    if (!t1 || !t2) {
+        errorMsg.textContent = "Please select both Team 1 and Team 2.";
+        errorBox.style.display = "flex";
+        return false;
+    }
+
+    if (t1 === t2) {
+        errorMsg.textContent = "Team 1 and Team 2 cannot be the same franchise! Please select two distinct teams.";
+        errorBox.style.display = "flex";
+        return false;
+    }
+
+    return true;
+}
+</script>
+{% endblock %}

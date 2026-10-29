@@ -1,0 +1,151 @@
+{% extends "base.html" %}
+
+{% block title %}IPL Analytics Dashboard - Interactive Charts{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="dashboard-header text-center">
+        <span class="badge-primary"><i class="fa-solid fa-chart-pie"></i> Visual Exploratory Analytics</span>
+        <h1 class="page-title mt-2">IPL Historical Analytics Dashboard</h1>
+        <p class="text-muted max-w-700 mx-auto">
+            Interactive visualizations derived directly from <strong>1,212 genuine match records (2008–2026)</strong>. 
+            All metrics reflect actual historical cricket data without synthetic or fabricated values.
+        </p>
+    </div>
+
+    <!-- Quick Metrics Row -->
+    <div class="stats-grid mt-4">
+        <div class="stat-card">
+            <div class="stat-icon icon-blue"><i class="fa-solid fa-trophy"></i></div>
+            <div class="stat-details">
+                <h3 class="stat-number">155 Wins</h3>
+                <p class="stat-label">Most Successful: Mumbai Indians</p>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon icon-gold"><i class="fa-solid fa-coins"></i></div>
+            <div class="stat-details">
+                <h3 class="stat-number">{{ eda.toss_impact.toss_winner_won_match_pct }}%</h3>
+                <p class="stat-label">Toss Winner Won Match</p>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon icon-purple"><i class="fa-solid fa-hand"></i></div>
+            <div class="stat-details">
+                <h3 class="stat-number">{{ eda.toss_impact.field_decision_win_pct }}%</h3>
+                <p class="stat-label">Win Rate when Fielding First</p>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon icon-green"><i class="fa-solid fa-chart-line"></i></div>
+            <div class="stat-details">
+                <h3 class="stat-number">{{ eda.toss_impact.bat_decision_win_pct }}%</h3>
+                <p class="stat-label">Win Rate when Batting First</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Charts Grid -->
+    <div class="charts-grid mt-4">
+        <!-- 1. Franchise Wins Bar Chart -->
+        <div class="card chart-card">
+            <div class="chart-header">
+                <div>
+                    <h3 class="chart-title"><i class="fa-solid fa-crown text-warning"></i> Total Matches Won by Franchise</h3>
+                    <p class="chart-desc">Total victories recorded per team in IPL history (ranked by wins).</p>
+                </div>
+            </div>
+            <div class="chart-body">
+                <canvas id="teamWinsChart" height="280"></canvas>
+            </div>
+            <div class="chart-footer">
+                <small class="text-muted"><i class="fa-solid fa-calculator"></i> Metric: Count of matches where team was the final winner (incl. Super Overs).</small>
+            </div>
+        </div>
+
+        <!-- 2. Matches Per Season Trend -->
+        <div class="card chart-card">
+            <div class="chart-header">
+                <div>
+                    <h3 class="chart-title"><i class="fa-solid fa-calendar text-primary"></i> Matches Played by Season</h3>
+                    <p class="chart-desc">Growth and seasonal tournament schedule (2008 to 2026).</p>
+                </div>
+            </div>
+            <div class="chart-body">
+                <canvas id="seasonChart" height="280"></canvas>
+            </div>
+            <div class="chart-footer">
+                <small class="text-muted"><i class="fa-solid fa-calculator"></i> Metric: Total match fixtures scheduled per IPL season.</small>
+            </div>
+        </div>
+
+        <!-- 3. Toss Impact on Match Outcome -->
+        <div class="card chart-card">
+            <div class="chart-header">
+                <div>
+                    <h3 class="chart-title"><i class="fa-solid fa-scale-balanced text-success"></i> Toss Winner vs Match Winner</h3>
+                    <p class="chart-desc">Does winning the toss confer a decisive advantage in T20?</p>
+                </div>
+            </div>
+            <div class="chart-body">
+                <canvas id="tossOutcomeChart" height="280"></canvas>
+            </div>
+            <div class="chart-footer">
+                <small class="text-muted"><i class="fa-solid fa-calculator"></i> Metric: % of matches where toss_winner == match_winner (excluding abandoned matches).</small>
+            </div>
+        </div>
+
+        <!-- 4. Toss Decision Breakdown -->
+        <div class="card chart-card">
+            <div class="chart-header">
+                <div>
+                    <h3 class="chart-title"><i class="fa-solid fa-hand-fist text-info"></i> Toss Decision Distribution</h3>
+                    <p class="chart-desc">Strategic preference: Batting first vs Fielding first (chasing).</p>
+                </div>
+            </div>
+            <div class="chart-body">
+                <canvas id="tossDecisionChart" height="280"></canvas>
+            </div>
+            <div class="chart-footer">
+                <small class="text-muted"><i class="fa-solid fa-calculator"></i> Metric: Proportion of captains choosing Field vs Bat after winning the toss.</small>
+            </div>
+        </div>
+
+        <!-- 5. Team Win Percentage -->
+        <div class="card chart-card full-width">
+            <div class="chart-header">
+                <div>
+                    <h3 class="chart-title"><i class="fa-solid fa-percent text-danger"></i> Franchise Win Percentage (%)</h3>
+                    <p class="chart-desc">Comparison of overall efficiency across established and newer franchises.</p>
+                </div>
+            </div>
+            <div class="chart-body">
+                <canvas id="winPctChart" height="240"></canvas>
+            </div>
+            <div class="chart-footer">
+                <small class="text-muted"><i class="fa-solid fa-calculator"></i> Metric: (Total Wins / Total Matches Played) &times; 100.</small>
+            </div>
+        </div>
+
+        <!-- 6. Venue Match Distribution -->
+        <div class="card chart-card full-width">
+            <div class="chart-header">
+                <div>
+                    <h3 class="chart-title"><i class="fa-solid fa-location-dot text-secondary"></i> Top Stadiums by Match Count</h3>
+                    <p class="chart-desc">Most frequented IPL venues across India and abroad.</p>
+                </div>
+            </div>
+            <div class="chart-body">
+                <canvas id="venueChart" height="240"></canvas>
+            </div>
+            <div class="chart-footer">
+                <small class="text-muted"><i class="fa-solid fa-calculator"></i> Metric: Total matches hosted at each respective ground.</small>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %}

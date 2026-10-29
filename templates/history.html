@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block title %}Prediction History - IPL ML Predictor{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+        <div>
+            <span class="badge-primary"><i class="fa-solid fa-database"></i> SQLite Persistent Storage</span>
+            <h1 class="page-title mt-2">Prediction History Log</h1>
+            <p class="text-muted">Audit trail of all match winner inferences executed locally.</p>
+        </div>
+
+        {% if records %}
+        <div>
+            <form action="{{ url_for('clear_prediction_history') }}" method="POST" onsubmit="return confirm('Are you sure you want to clear all prediction history?');">
+                <button type="submit" class="btn btn-danger btn-sm">
+                    <i class="fa-solid fa-trash"></i> Clear History
+                </button>
+            </form>
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="card">
+        <div class="card-body p-0">
+            {% if records %}
+            <div class="table-responsive">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Timestamp</th>
+                            <th>Fixture (Team 1 vs Team 2)</th>
+                            <th>Toss Details</th>
+                            <th>Venue</th>
+                            <th>Predicted Winner</th>
+                            <th>Confidence</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for r in records %}
+                        <tr>
+                            <td class="text-muted">{{ r.id }}</td>
+                            <td><small>{{ r.timestamp }}</small></td>
+                            <td>
+                                <strong>{{ r.team1 }}</strong>
+                                <span class="text-muted">vs</span>
+                                <strong>{{ r.team2 }}</strong>
+                            </td>
+                            <td>
+                                <small>
+                                    {{ r.toss_winner }} ({{ r.toss_decision }})
+                                </small>
+                            </td>
+                            <td><small>{{ r.venue }}</small></td>
+                            <td>
+                                <span class="badge badge-success">
+                                    <i class="fa-solid fa-trophy"></i> {{ r.predicted_winner }}
+                                </span>
+                            </td>
+                            <td>
+                                <small>
+                                    {{ r.team1 }}: {{ r.prob_team1 }}%<br>
+                                    {{ r.team2 }}: {{ r.prob_team2 }}%
+                                </small>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="empty-state text-center p-5">
+                <i class="fa-solid fa-clipboard-list empty-icon text-muted"></i>
+                <h3 class="mt-3">No Predictions Logged Yet</h3>
+                <p class="text-muted">Run your first match prediction to see persistent records appear here.</p>
+                <a href="{{ url_for('prediction_form') }}" class="btn btn-primary mt-2">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> Make a Prediction
+                </a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

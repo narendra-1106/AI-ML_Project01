@@ -1,0 +1,189 @@
+{% extends "base.html" %}
+
+{% block title %}About & Viva Guide - IPL ML Project{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="about-header text-center">
+        <span class="badge-primary"><i class="fa-solid fa-graduation-cap"></i> Academic Project Documentation</span>
+        <h1 class="page-title mt-2">IPL Data Analytics & Match Winner Prediction</h1>
+        <p class="text-muted max-w-700 mx-auto">
+            Comprehensive project methodology, Machine Learning architecture, model evaluation comparison, 
+            and Viva preparation for B.Tech Computer Science & Engineering (AI/ML).
+        </p>
+    </div>
+
+    <!-- 1. Project Objectives & Overview -->
+    <div class="card mt-4">
+        <div class="card-header">
+            <h3 class="card-title"><i class="fa-solid fa-bullseye text-primary"></i> Project Objectives & Scope</h3>
+        </div>
+        <div class="card-body">
+            <p>
+                The primary aim of this project is to build an interactive, data-driven web application that combines 
+                <strong>historical cricket analytics</strong> with <strong>predictive machine learning classification</strong>.
+            </p>
+            <ul class="bullet-list">
+                <li><strong>Predict Likely Match Winners:</strong> Classify pre-match conditions using supervised machine learning algorithms.</li>
+                <li><strong>Interactive Visual Analytics:</strong> Render comprehensive historical distributions (matches per season, franchise wins, toss trends, venue stats) via Chart.js.</li>
+                <li><strong>Rigorous Model Comparison:</strong> Train and compare a single <em>Decision Tree</em> against an ensemble <em>Random Forest Classifier</em> on identical chronological splits.</li>
+                <li><strong>Eliminate Data Leakage:</strong> Enforce strict pre-match feature constraints and chronological validation to mirror real-world sports analytics.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 2. Technology Stack -->
+    <div class="card mt-4">
+        <div class="card-header">
+            <h3 class="card-title"><i class="fa-solid fa-layer-group text-purple"></i> Technology Stack</h3>
+        </div>
+        <div class="card-body">
+            <div class="tech-grid">
+                <div class="tech-card">
+                    <h4>Backend</h4>
+                    <p><strong>Python 3.12</strong> & <strong>Flask</strong></p>
+                    <small class="text-muted">Lightweight WSGI framework handling routing, form validation, and pipeline inference.</small>
+                </div>
+                <div class="tech-card">
+                    <h4>Machine Learning</h4>
+                    <p><strong>Scikit-learn</strong> & <strong>Joblib</strong></p>
+                    <small class="text-muted">ColumnTransformer, OneHotEncoder, DecisionTreeClassifier, and RandomForestClassifier.</small>
+                </div>
+                <div class="tech-card">
+                    <h4>Data Analytics</h4>
+                    <p><strong>Pandas</strong> & <strong>NumPy</strong></p>
+                    <small class="text-muted">High-performance tabular manipulation, aggregation, and null handling across 1,200+ matches.</small>
+                </div>
+                <div class="tech-card">
+                    <h4>Database & Frontend</h4>
+                    <p><strong>SQLite</strong>, <strong>HTML5/CSS3</strong>, <strong>Chart.js</strong></p>
+                    <small class="text-muted">Persistent prediction history logs and dynamic client-side visual charts.</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. Machine Learning Model Comparison -->
+    <div class="card mt-4">
+        <div class="card-header">
+            <h3 class="card-title"><i class="fa-solid fa-code-compare text-success"></i> Model Comparison: Decision Tree vs Random Forest</h3>
+            <p class="text-muted small">Evaluated on historical chronological test set (matches from seasons 2023–2026):</p>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Model Architecture</th>
+                            <th class="text-center">Train Accuracy</th>
+                            <th class="text-center">Test Accuracy</th>
+                            <th class="text-center">Precision</th>
+                            <th class="text-center">Recall</th>
+                            <th class="text-center">F1-Score</th>
+                            <th class="text-center">Decision</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Model 1: Decision Tree Classifier</strong><br><small class="text-muted">Single tree, max_depth=5</small></td>
+                            <td class="text-center">54.65%</td>
+                            <td class="text-center">48.05%</td>
+                            <td class="text-center">0.4694</td>
+                            <td class="text-center">0.4805</td>
+                            <td class="text-center">0.4286</td>
+                            <td class="text-center"><span class="badge badge-warning">Baseline</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Model 2: Random Forest Classifier</strong><br><small class="text-muted">120 estimators, max_depth=8</small></td>
+                            <td class="text-center">60.52%</td>
+                            <td class="text-center"><strong>50.97%</strong></td>
+                            <td class="text-center"><strong>0.5098</strong></td>
+                            <td class="text-center"><strong>0.5097</strong></td>
+                            <td class="text-center"><strong>0.5093</strong></td>
+                            <td class="text-center"><span class="badge badge-success"><i class="fa-solid fa-check"></i> Champion</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card-footer bg-light p-3">
+            <p class="small mb-0">
+                <strong>Why Random Forest was chosen:</strong> Sports match prediction involves high stochastic variance. 
+                A single Decision Tree suffers from high variance and quickly overfits to specific ground-toss combinations. 
+                Random Forest aggregates 120 randomized bootstrap trees (bagging), reducing prediction variance and yielding superior F1 performance.
+            </p>
+        </div>
+    </div>
+
+    <!-- 4. Viva Questions and Answers -->
+    <div class="card mt-4">
+        <div class="card-header">
+            <h3 class="card-title"><i class="fa-solid fa-comments-question-check text-warning"></i> Key Viva Questions & Answers</h3>
+        </div>
+        <div class="card-body">
+            <div class="viva-item">
+                <h5 class="viva-q">Q1: Why can't we use match scores, wickets, or Player of the Match as input features?</h5>
+                <p class="viva-a">
+                    <strong>Answer:</strong> Those are <em>post-match variables</em>. In a real-world predictive setting, 
+                    a match winner prediction is generated before the match begins. Using post-match data would cause 
+                    <strong>data leakage</strong>, artificially producing 99% accuracy on paper but rendering the model useless for upcoming games.
+                </p>
+            </div>
+
+            <div class="viva-item mt-3">
+                <h5 class="viva-q">Q2: Why did you use a Chronological Train/Test Split instead of random train_test_split?</h5>
+                <p class="viva-a">
+                    <strong>Answer:</strong> Sports data is temporal. If we shuffle matches randomly, the model might train on 
+                    a 2024 match and test on a 2018 match, allowing future knowledge (team compositions, franchise eras) to leak into the past. 
+                    A chronological split (training on &le; 2022, testing on &gt; 2022) tests how well the model predicts future unknown tournaments.
+                </p>
+            </div>
+
+            <div class="viva-item mt-3">
+                <h5 class="viva-q">Q3: How does the pipeline handle unknown categories or new venues?</h5>
+                <p class="viva-a">
+                    <strong>Answer:</strong> The Scikit-learn <code>OneHotEncoder</code> is configured with 
+                    <code>handle_unknown='ignore'</code>. If an unseen venue is entered, all one-hot dummy columns for venue evaluate to 0, 
+                    allowing the model to rely on team strengths and toss decisions without crashing with a ValueError.
+                </p>
+            </div>
+
+            <div class="viva-item mt-3">
+                <h5 class="viva-q">Q4: Why are match predictions presented as probabilities rather than guarantees?</h5>
+                <p class="viva-a">
+                    <strong>Answer:</strong> Cricket is an inherently non-deterministic sport where injuries, pitch decay, individual brilliance, 
+                    and weather influence outcomes. Honest ML systems present calibrated win likelihoods (e.g., 54.8% vs 45.2%) 
+                    rather than asserting guaranteed certainty.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 5. Limitations & Future Scope -->
+    <div class="card mt-4">
+        <div class="card-header">
+            <h3 class="card-title"><i class="fa-solid fa-compass-drafting text-danger"></i> Limitations & Future Enhancements</h3>
+        </div>
+        <div class="card-body">
+            <div class="row-2col">
+                <div>
+                    <h5 class="text-danger">Current Limitations</h5>
+                    <ul class="bullet-list small">
+                        <li>Does not incorporate individual player form or dynamic squad auction changes.</li>
+                        <li>In-match conditions (dew factor, pitch wear during 2nd innings) are not captured in match-level summaries.</li>
+                        <li>Small sample size for newer franchises (Gujarat Titans, Lucknow Super Giants).</li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="text-success">Future Scope</h5>
+                    <ul class="bullet-list small">
+                        <li>Integrate ball-by-ball datasets (available in archive) to compute bowler economy and batsman strike rates.</li>
+                        <li>Implement live win-probability predictors during ongoing matches (similar to Cricinfo's Forecaster).</li>
+                        <li>Incorporate weather and pitch report sensors using external cricket APIs.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

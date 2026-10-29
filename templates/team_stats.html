@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+
+{% block title %}Team Statistics - {{ selected_team }}{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <!-- Header with Team Dropdown Selector -->
+    <div class="team-header-wrapper">
+        <div class="team-header-left">
+            <span class="badge-primary"><i class="fa-solid fa-shield-halved"></i> Franchise Profile</span>
+            <h1 class="page-title mt-2">{{ selected_team }}</h1>
+            <p class="text-muted">Historical match performance, toss correlation, and head-to-head records.</p>
+        </div>
+
+        <div class="team-header-right">
+            <form action="{{ url_for('team_stats') }}" method="GET" class="team-select-form">
+                <label for="team" class="form-label mb-1"><strong>Select Franchise:</strong></label>
+                <div class="d-flex">
+                    <select name="team" id="team" class="form-control" onchange="this.form.submit()">
+                        {% for team in teams %}
+                            <option value="{{ team }}" {% if team == selected_team %}selected{% endif %}>{{ team }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Core Team Stats Cards -->
+    <div class="stats-grid mt-4">
+        <div class="stat-card">
+            <div class="stat-icon icon-blue"><i class="fa-solid fa-baseball-bat-ball"></i></div>
+            <div class="stat-details">
+                <h3 class="stat-number">{{ team_info.total_played }}</h3>
+                <p class="stat-label">Total Matches Played</p>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon icon-gold"><i class="fa-solid fa-trophy"></i></div>
+            <div class="stat-details">
+                <h3 class="stat-number">{{ team_info.total_wins }}</h3>
+                <p class="stat-label">Total Matches Won</p>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon icon-green"><i class="fa-solid fa-percent"></i></div>
+            <div class="stat-details">
+                <h3 class="stat-number">{{ team_info.win_percentage }}%</h3>
+                <p class="stat-label">Overall Win Rate</p>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon icon-purple"><i class="fa-solid fa-coins"></i></div>
+            <div class="stat-details">
+                <h3 class="stat-number">{{ team_info.toss_win_rate }}%</h3>
+                <p class="stat-label">Win % When Winning Toss</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Head to Head Rivalry Table -->
+    <div class="card mt-4">
+        <div class="card-header">
+            <h3 class="card-title"><i class="fa-solid fa-scale-balanced text-primary"></i> Head-to-Head Records against Opponents</h3>
+            <p class="text-muted small">Win/Loss records of {{ selected_team }} across all historical matches.</p>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Opponent Franchise</th>
+                            <th class="text-center">Matches</th>
+                            <th class="text-center">Won</th>
+                            <th class="text-center">Lost / No Result</th>
+                            <th class="text-center">Win Rate (%)</th>
+                            <th>Outcome Ratio</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for r in h2h %}
+                        <tr>
+                            <td><strong>{{ r.opponent }}</strong></td>
+                            <td class="text-center">{{ r.played }}</td>
+                            <td class="text-center text-success font-weight-bold">{{ r.won }}</td>
+                            <td class="text-center text-danger">{{ r.lost }}</td>
+                            <td class="text-center">
+                                <span class="badge {% if r.win_pct >= 50 %}badge-success{% else %}badge-warning{% endif %}">
+                                    {{ r.win_pct }}%
+                                </span>
+                            </td>
+                            <td>
+                                <div class="mini-progress-bar">
+                                    <div class="mini-fill fill-win" style="width: {{ r.win_pct }}%;"></div>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Rules & Historical Normalization Note -->
+    <div class="academic-banner mt-4">
+        <div class="academic-icon"><i class="fa-solid fa-circle-info"></i></div>
+        <div class="academic-text">
+            <h4>Data Normalization & Rule Handling</h4>
+            <p>
+                <strong>Ties:</strong> Matches tied and resolved via Super Over count the Super Over victor as a win.<br>
+                <strong>No-Results:</strong> Rainouts and abandoned fixtures are excluded from win-percentage calculations.<br>
+                <strong>Rebranded Franchises:</strong> Historical continuity is mapped (e.g. <em>Delhi Daredevils</em> &rarr; <em>Delhi Capitals</em>, <em>Kings XI Punjab</em> &rarr; <em>Punjab Kings</em>) to maintain authentic franchise records.
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

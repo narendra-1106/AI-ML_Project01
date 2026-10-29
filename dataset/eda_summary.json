@@ -1,0 +1,163 @@
+{
+    "total_matches": 1212,
+    "total_seasons": 19,
+    "seasons_list": [
+        "2008",
+        "2009",
+        "2010",
+        "2011",
+        "2012",
+        "2013",
+        "2014",
+        "2015",
+        "2016",
+        "2017",
+        "2018",
+        "2019",
+        "2020/21",
+        "2021",
+        "2022",
+        "2023",
+        "2024",
+        "2025",
+        "2026"
+    ],
+    "total_venues": 59,
+    "total_teams": 14,
+    "teams_list": [
+        "Chennai Super Kings",
+        "Delhi Capitals",
+        "Gujarat Lions",
+        "Gujarat Titans",
+        "Kochi Tuskers Kerala",
+        "Kolkata Knight Riders",
+        "Lucknow Super Giants",
+        "Mumbai Indians",
+        "Pune Warriors",
+        "Punjab Kings",
+        "Rajasthan Royals",
+        "Rising Pune Supergiant",
+        "Royal Challengers Bangalore",
+        "Sunrisers Hyderabad"
+    ],
+    "team_statistics": {
+        "Chennai Super Kings": {
+            "matches_played": 260,
+            "wins": 145,
+            "win_percentage": 55.77
+        },
+        "Delhi Capitals": {
+            "matches_played": 276,
+            "wins": 124,
+            "win_percentage": 44.93
+        },
+        "Gujarat Lions": {
+            "matches_played": 30,
+            "wins": 13,
+            "win_percentage": 43.33
+        },
+        "Gujarat Titans": {
+            "matches_played": 69,
+            "wins": 42,
+            "win_percentage": 60.87
+        },
+        "Kochi Tuskers Kerala": {
+            "matches_played": 14,
+            "wins": 6,
+            "win_percentage": 42.86
+        },
+        "Kolkata Knight Riders": {
+            "matches_played": 272,
+            "wins": 136,
+            "win_percentage": 50.0
+        },
+        "Lucknow Super Giants": {
+            "matches_played": 66,
+            "wins": 33,
+            "win_percentage": 50.0
+        },
+        "Mumbai Indians": {
+            "matches_played": 285,
+            "wins": 155,
+            "win_percentage": 54.39
+        },
+        "Pune Warriors": {
+            "matches_played": 46,
+            "wins": 12,
+            "win_percentage": 26.09
+        },
+        "Punjab Kings": {
+            "matches_played": 272,
+            "wins": 129,
+            "win_percentage": 47.43
+        },
+        "Rajasthan Royals": {
+            "matches_played": 245,
+            "wins": 123,
+            "win_percentage": 50.2
+        },
+        "Rising Pune Supergiant": {
+            "matches_played": 30,
+            "wins": 15,
+            "win_percentage": 50.0
+        },
+        "Royal Challengers Bangalore": {
+            "matches_played": 279,
+            "wins": 139,
+            "win_percentage": 49.82
+        },
+        "Sunrisers Hyderabad": {
+            "matches_played": 280,
+            "wins": 131,
+            "win_percentage": 46.79
+        }
+    },
+    "toss_impact": {
+        "toss_winner_won_match_pct": 51.7,
+        "field_decision_win_pct": 54.84,
+        "bat_decision_win_pct": 45.59,
+        "decision_breakdown": {
+            "field": 800,
+            "bat": 412
+        }
+    },
+    "top_venues": {
+        "Eden Gardens": 77,
+        "Wankhede Stadium": 73,
+        "M Chinnaswamy Stadium": 65,
+        "Feroz Shah Kotla": 60,
+        "Wankhede Stadium, Mumbai": 57,
+        "Rajiv Gandhi International Stadium, Uppal": 49,
+        "MA Chidambaram Stadium, Chepauk": 48,
+        "Sawai Mansingh Stadium": 47,
+        "Dubai International Cricket Stadium": 46,
+        "MA Chidambaram Stadium, Chepauk, Chennai": 38
+    },
+    "head_to_head": {
+        "Mumbai Indians vs Chennai Super Kings": {
+            "total_matches": 40,
+            "Mumbai Indians_wins": 21,
+            "Chennai Super Kings_wins": 19
+        },
+        "Royal Challengers Bangalore vs Kolkata Knight Riders": {
+            "total_matches": 35,
+            "Royal Challengers Bangalore_wins": 15,
+            "Kolkata Knight Riders_wins": 20
+        },
+        "Chennai Super Kings vs Royal Challengers Bangalore": {
+            "total_matches": 35,
+            "Chennai Super Kings_wins": 21,
+            "Royal Challengers Bangalore_wins": 14
+        },
+        "Mumbai Indians vs Kolkata Knight Riders": {
+            "total_matches": 36,
+            "Mumbai Indians_wins": 25,
+            "Kolkata Knight Riders_wins": 11
+        },
+        "Delhi Capitals vs Punjab Kings": {
+            "total_matches": 35,
+            "Delhi Capitals_wins": 16,
+            "Punjab Kings_wins": 19
+        }
+    }
+}

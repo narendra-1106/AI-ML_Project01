@@ -1,0 +1,147 @@
+{% extends "base.html" %}
+
+{% block title %}Home - IPL Data Analytics & Match Winner Prediction{% endblock %}
+
+{% block content %}
+<div class="container">
+    <!-- Hero Banner -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <div class="hero-badge">
+                <i class="fa-solid fa-code-compare"></i> Machine Learning Classification Pipeline
+            </div>
+            <h1 class="hero-title">IPL Data Analytics & Match Winner Prediction</h1>
+            <p class="hero-subtitle">
+                An end-to-end Machine Learning web application analyzing <strong>1,200+ historical IPL matches</strong> 
+                across 19 seasons (2008–2026). Predict likely match outcomes using real cricket features and explore 
+                in-depth franchise performance analytics.
+            </p>
+            <div class="hero-actions">
+                <a href="{{ url_for('prediction_form') }}" class="btn btn-primary btn-lg">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> Predict Match Winner
+                </a>
+                <a href="{{ url_for('dashboard') }}" class="btn btn-outline btn-lg">
+                    <i class="fa-solid fa-chart-line"></i> View Analytics Dashboard
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Genuine Dataset Statistics Cards -->
+    <section class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-icon icon-blue">
+                <i class="fa-solid fa-baseball-bat-ball"></i>
+            </div>
+            <div class="stat-details">
+                <h3 class="stat-number">{{ stats.total_matches }}</h3>
+                <p class="stat-label">Total Matches Analyzed</p>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon icon-purple">
+                <i class="fa-solid fa-calendar-days"></i>
+            </div>
+            <div class="stat-details">
+                <h3 class="stat-number">{{ stats.total_seasons }}</h3>
+                <p class="stat-label">IPL Seasons (2008–2026)</p>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon icon-green">
+                <i class="fa-solid fa-location-dot"></i>
+            </div>
+            <div class="stat-details">
+                <h3 class="stat-number">{{ stats.total_venues }}</h3>
+                <p class="stat-label">Stadiums & Venues</p>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon icon-gold">
+                <i class="fa-solid fa-trophy"></i>
+            </div>
+            <div class="stat-details">
+                <h3 class="stat-number">{{ stats.top_wins }} Wins</h3>
+                <p class="stat-label">Record Holder: {{ stats.top_team }}</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Features Grid -->
+    <section class="section-container">
+        <div class="section-header">
+            <h2 class="section-title">Core Project Modules</h2>
+            <p class="section-desc">Engineered for academic demonstration, technical assessment, and college viva.</p>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fa-solid fa-brain"></i>
+                </div>
+                <h3>Match Winner Prediction</h3>
+                <p>
+                    Select two competing IPL franchises, toss winner, toss decision, and venue. 
+                    The trained ensemble Random Forest model predicts the probable winner with calculated likelihoods.
+                </p>
+                <a href="{{ url_for('prediction_form') }}" class="feature-link">Open Prediction Form &rarr;</a>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fa-solid fa-chart-pie"></i>
+                </div>
+                <h3>Interactive Data Analytics</h3>
+                <p>
+                    Visualizations powered by Chart.js showcasing matches per season, franchise victory leaderboards, 
+                    toss impact (bat vs. field), and stadium-wise distributions.
+                </p>
+                <a href="{{ url_for('dashboard') }}" class="feature-link">Explore Dashboard &rarr;</a>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+                <h3>Franchise Deep-Dive</h3>
+                <p>
+                    Comprehensive individual statistics for all 14 IPL teams, including historical win ratios, 
+                    toss correlation, head-to-head records against every rival, and season-wise performance.
+                </p>
+                <a href="{{ url_for('team_stats') }}" class="feature-link">View Team Stats &rarr;</a>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fa-solid fa-microscope"></i>
+                </div>
+                <h3>Model Comparison & Viva Guide</h3>
+                <p>
+                    Rigorous machine learning comparison between Decision Tree and Random Forest classifiers 
+                    using Accuracy, Precision, Recall, F1-Score, and temporal cross-validation.
+                </p>
+                <a href="{{ url_for('about') }}" class="feature-link">Read Methodology &rarr;</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Academic Methodology Notice -->
+    <section class="academic-banner">
+        <div class="academic-icon">
+            <i class="fa-solid fa-graduation-cap"></i>
+        </div>
+        <div class="academic-text">
+            <h4>Academic AI/ML Methodology Note</h4>
+            <p>
+                To avoid temporal data leakage, our machine learning pipeline strictly uses 
+                <strong>pre-match features only</strong> (teams, toss, and venue) and performs 
+                <strong>chronological train/test splitting</strong>. Post-match information like match margin, 
+                score totals, or player of the match are strictly excluded from prediction inputs.
+            </p>
+        </div>
+    </section>
+</div>
+{% endblock %}

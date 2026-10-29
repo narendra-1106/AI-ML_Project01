@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}IPL Match Prediction & Analytics{% endblock %}</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    {% block head %}{% endblock %}
+</head>
+<body>
+
+    <!-- Header & Navigation Bar -->
+    <header class="navbar">
+        <div class="container nav-container">
+            <a href="{{ url_for('index') }}" class="brand-logo">
+                <i class="fa-solid fa-trophy brand-icon"></i>
+                <div class="brand-text">
+                    <span class="brand-title">IPL Predict & Analytics</span>
+                    <span class="brand-subtitle">AI & ML Mini Project</span>
+                </div>
+            </a>
+            
+            <nav class="nav-menu">
+                <a href="{{ url_for('index') }}" class="nav-link {% if request.path == '/' %}active{% endif %}">
+                    <i class="fa-solid fa-house"></i> Home
+                </a>
+                <a href="{{ url_for('prediction_form') }}" class="nav-link {% if request.path == '/prediction' or request.path == '/predict' %}active{% endif %}">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> Match Prediction
+                </a>
+                <a href="{{ url_for('dashboard') }}" class="nav-link {% if request.path == '/dashboard' %}active{% endif %}">
+                    <i class="fa-solid fa-chart-column"></i> Analytics Dashboard
+                </a>
+                <a href="{{ url_for('team_stats') }}" class="nav-link {% if request.path == '/team-stats' %}active{% endif %}">
+                    <i class="fa-solid fa-shield-halved"></i> Team Stats
+                </a>
+                <a href="{{ url_for('history') }}" class="nav-link {% if request.path == '/history' %}active{% endif %}">
+                    <i class="fa-solid fa-clock-rotate-left"></i> History
+                </a>
+                <a href="{{ url_for('about') }}" class="nav-link {% if request.path == '/about' %}active{% endif %}">
+                    <i class="fa-solid fa-circle-info"></i> About & Viva
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Flash Messages Container -->
+    <div class="container mt-3">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                        <span>{{ message }}</span>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    <!-- Main Content Block -->
+    <main class="main-content">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-content">
+            <div class="footer-left">
+                <h4>IPL Data Analytics & Match Winner Prediction</h4>
+                <p>B.Tech Computer Science & Engineering (AI / ML) College Mini Project</p>
+                <p class="text-muted small">Powered by Python, Flask, Pandas, Scikit-learn, and Chart.js.</p>
+            </div>
+            <div class="footer-right">
+                <div class="disclaimer-badge">
+                    <i class="fa-solid fa-triangle-exclamation"></i> Academic AI/ML Project — Probabilistic match outcomes, not guaranteed results.
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    {% block scripts %}{% endblock %}
+</body>
+</html>
