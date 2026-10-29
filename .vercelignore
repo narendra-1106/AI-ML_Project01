@@ -1,0 +1,6 @@
+.venv
+__pycache__
+*.pyc
+dataset/ball_by_ball_data.csv
+.git
+.gitignore

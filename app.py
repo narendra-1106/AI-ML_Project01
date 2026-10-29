@@ -140,17 +140,20 @@ def predict():
             predicted_winner = team2
             confidence = prob_team2
 
-        # Save prediction into SQLite
-        save_prediction(
-            team1=team1,
-            team2=team2,
-            toss_winner=toss_winner,
-            toss_decision=toss_decision,
-            venue=venue,
-            predicted_winner=predicted_winner,
-            prob_team1=prob_team1,
-            prob_team2=prob_team2
-        )
+        # Save prediction into SQLite (safe execution - will not disrupt inference on read-only environments)
+        try:
+            save_prediction(
+                team1=team1,
+                team2=team2,
+                toss_winner=toss_winner,
+                toss_decision=toss_decision,
+                venue=venue,
+                predicted_winner=predicted_winner,
+                prob_team1=prob_team1,
+                prob_team2=prob_team2
+            )
+        except Exception as db_err:
+            print(f"[INFO] Prediction save skipped or memory-only: {db_err}")
 
         # Historical Head-to-Head between these two teams
         h2h_played = 0
